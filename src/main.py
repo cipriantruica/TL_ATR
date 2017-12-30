@@ -252,7 +252,7 @@ if __name__ == "__main__":
             print(topiclabel)
 
         endTime = time()
-        print("NMF TFIDF C-Value Lables Time:", (endTime - intermediateTime2))
+        print("NMF TFIDF C-Value Labels Time:", (endTime - intermediateTime2))
         print("NMF TFIDF C-Value Total Time:", (endTime - startTime))
         print('NMF TFIDF ARI C-Value:', evaluation_measures.adj_rand_index(topic_model.doc2topicNMF))
 
@@ -302,7 +302,7 @@ if __name__ == "__main__":
             print(topiclabel)
       
         endTime = time()
-        print("LDA TFIDF C-Value Lables Time:", (endTime - intermediateTime2))
+        print("LDA TFIDF C-Value Labels Time:", (endTime - intermediateTime2))
         print("LDA TFIDF C-Value Total Time:", (endTime - startTime))
         print('LDA TFIDF ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
 
@@ -357,7 +357,7 @@ if __name__ == "__main__":
             print(topiclabel)
 
         endTime = time()
-        print("NMF Okapi BM25 C-Value Lables Time:", (endTime - intermediateTime2))
+        print("NMF Okapi BM25 C-Value Labels Time:", (endTime - intermediateTime2))
         print("NMF Okapi BM25 C-Value Total Time:", (endTime - startTime))
         print('NMF Okapi BM25 ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicNMF))
 
@@ -396,7 +396,7 @@ if __name__ == "__main__":
 
         intermediateTime2 = time()
         print("LDA Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
-        print("Starting the labling process...")
+        print("Starting the labeling process...")
         
         with ProcessPoolExecutor(max_workers=num_topics) as worker:
             for result in worker.map(getTopicLabels, topicNGramsList):
@@ -408,6 +408,6 @@ if __name__ == "__main__":
 
 
         endTime = time()
-        print("NMF Okapi BM25 C-Value Lables Time:", (endTime - intermediateTime2))
-        print("NMF Okapi BM25 C-Value Total Time:", (endTime - startTime))
+        print("LDA Okapi BM25 C-Value Labels Time:", (endTime - intermediateTime2))
+        print("LDA Okapi BM25 C-Value Total Time:", (endTime - startTime))
         print('LDA Okapi ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
