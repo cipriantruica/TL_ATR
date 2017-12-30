@@ -174,9 +174,9 @@ def getTopicLabels(elem):
     return {"topic": elem["topic_id"], "label": label}
 
 def getNGramsTopic(elem):
-    for idx in topicDocs:
-        if doc2id[elem['docID']] in topicDocs[idx]['docs']:
-            return {"topic_id": topicDocs[idx]["topic_id"], "ngram": doc['candidateNGrams']}
+    for td in topicDocs:
+        if doc2id[elem['docID']] in td['docs']:
+            return {"topic_id": td["topic_id"], "ngram": td['candidateNGrams']}
 
 
 # params:
