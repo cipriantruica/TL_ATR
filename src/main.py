@@ -175,7 +175,7 @@ def getTopicLabels(elem):
 def getNGramsTopic(elem):
     for td in topicDocs:
         if doc2id[elem['docID']] in td['docs']:
-            return {"topic_id": td["topic_id"], "ngram": td['candidateNGrams']}
+            return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams']}
 
 
 # params:
