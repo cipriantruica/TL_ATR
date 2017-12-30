@@ -242,7 +242,7 @@ if __name__ == "__main__":
         with ProcessPoolExecutor(max_workers=no_threads) as worker:
             for result in worker.map(getNGramsTopic, docs):
                 if result:
-                    topicNGrams[result[topic_id]] += result['ngram']
+                    topicNGrams[result["topic_id"]] += result['ngram']
 
         for topic_id in topicNGrams:
             topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
