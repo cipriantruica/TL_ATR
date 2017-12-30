@@ -108,7 +108,6 @@ def processElement(elem):
     doc['wordsCount'] = l_count
     doc['lenDoc'] = lenDoc
     doc['wordsIDF'] = l_idf
-    print(doc)
     return doc
 
 def processVocabulary(elem):
