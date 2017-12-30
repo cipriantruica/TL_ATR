@@ -58,17 +58,25 @@ grammar ={
 punctuation = '"#$%&\'()*+/<=>@[\\]^_`{|}~-'
 
 threshold = 1.0
-doc2class = {}
+
 docs = []
+doc2class = {}
+
 word2id = {}
 id2word = {}
+
 doc2id = {}
 id2doc = {}
+
 wordIDF = {}
-TMlabelsNMFTFIDF = []
-TMlabelsNMFOkapi = []
-TMlabelsLDATFIDF = []
-TMlabelsLDAOkapi = []
+
+topicDocs = []
+
+tmLabels = []
+topicNGrams = {}
+topicNGramsList = []
+
+
 no_threads = cpu_count()
 tags = set()
 i = 0
@@ -80,27 +88,28 @@ def processElement(elem):
     lt.getLematizedSentences()
     lt.getNGrams()
     lt.computeCValue(treshold=threshold)
-    dic = {}
-    dic['text'] = text
-    dic['docID'] = elem['_id']
-    dic['tag'] = elem['tags'][0]
-    dic['terms'] = lt.getVocabulary()
-    dic['candidateNGrams'] = lt.getCandidateNGrams()
+    doc = {}
+    doc['text'] = text
+    doc['docID'] = elem['_id']
+    doc['tag'] = elem['tags'][0]
+    doc['terms'] = lt.getVocabulary()
+    doc['candidateNGrams'] = lt.getCandidateNGrams()
     l_tf = {}
     l_count = {}
     l_idf = {}
     lenDoc = 0
     for word in elem['words']:
-        if word['word'] in dic['terms']:
+        if word['word'] in doc['terms']:
             l_tf[word['word']] = word['tf']
             l_count[word['word']] = word['count']
             lenDoc += word['count']
             l_idf[word['word']] = wordIDF[word['word']]
-    dic['wordsTF'] = l_tf
-    dic['wordsCount'] = l_count
-    dic['lenDoc'] = lenDoc
-    dic['wordsIDF'] = l_idf
-    return dic
+    doc['wordsTF'] = l_tf
+    doc['wordsCount'] = l_count
+    doc['lenDoc'] = lenDoc
+    doc['wordsIDF'] = l_idf
+    print(doc)
+    return doc
 
 def processVocabulary(elem):
     return {elem['word']: elem['IDF']}
@@ -156,6 +165,19 @@ def getLabel(elem):
     label = sorted(lt.cvalue, key = lt.cvalue.get, reverse=True)[0]
     return {"topic": elem["topic_id"], "label": label}
 
+def getTopicLabels(elem):
+    # get the frequency for all the candidate n-grams
+    allCandidateNGramsFreq = Counter(elem["ngram"])
+    lt = AutomaticTermExtraction(text="", grammar=grammar, punctuation=punctuation)    
+    lt.computeCValue(treshold=threshold, candidateNGramsFreq=allCandidateNGramsFreq)
+    label = sorted(lt.cvalue, key = lt.cvalue.get, reverse=True)[0]
+    return {"topic": elem["topic_id"], "label": label}
+
+def getNGramsTopic(elem):
+    for idx in topicDocs:
+        if doc2id[elem['docID']] in topicDocs[idx]['docs']:
+            return {"topic_id": topicDocs[idx]["topic_id"], "ngram": doc['candidateNGrams']}
+
 
 # params:
 # dbname Database
@@ -177,12 +199,14 @@ if __name__ == "__main__":
     # get all the documents
     # filter={"_id": {"$in" : ["2", "5", "4", "3", "6", "7", "9", "8", "1", "13", "463", "465", "464", "466", "467", "468", "470", "469", "472", "473"]}},
     documents = conn.getRecords(collection='documents', projection={'cleanText': 1, 'tags': 1, 'words': 1})
-    i = 0
+    
     with ProcessPoolExecutor(max_workers=no_threads) as worker:
         for result in worker.map(processElement, documents):
             if result:
                 docs.append(result)
     conn.closeConection()
+
+    print(len(docs))
     
     csr_tfidf, csr_okapi = buildMatrix(documents=docs)
 
@@ -196,6 +220,11 @@ if __name__ == "__main__":
     for i in range(0, no_tests):
         print("TFIDF")
         print('NMF TFIDF with cvalue:')
+        
+        topicNGrams = {}
+        topicNGramsList = []
+        tmLabels = []
+
         topic_model = TopicModeling(id2word=id2word, corpus=csr_tfidf, doc2class=doc2class, num_cores=30)
         start = time()
         topics = topic_model.topicsNMF(num_topics=num_topics, num_iterations=num_iter)
@@ -204,78 +233,109 @@ if __name__ == "__main__":
             for words in topic[1]:
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
+            topicNGrams[topic[0]] = []
+        # with ProcessPoolExecutor(max_workers=no_threads) as worker:
+        #     for result in worker.map(getLabel, topic_model.topicDocsNMF):
+        #         if result:
+        #             tmLabels.append(result)
+
+        topicDocs = topic_model.topicDocsNMF
         with ProcessPoolExecutor(max_workers=no_threads) as worker:
-            for result in worker.map(getLabel, topic_model.topicDocsNMF):
+            for result in worker.map(getNGramsTopic, docs):
                 if result:
-                    TMlabelsNMFTFIDF.append(result)
-        for topiclabel in TMlabelsNMFTFIDF:
+                    topicNGrams[result[topic_id]] += result['ngram']
+
+        for topic_id in topicNGrams:
+            topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
+
+        with ProcessPoolExecutor(max_workers=num_topics) as worker:
+            for result in worker.map(getTopicLabels, topicNGramsList):
+                if result:
+                    tmLabels.append(result)
+
+        for topiclabel in tmLabels:
             print(topiclabel)
         end = time()
         print("NMF TFIDF c-value time", (end - start))
         print('NMF TFIDF ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicNMF))
 
-        print("\n*********************************************************\n")
+    #     print("\n*********************************************************\n")
 
-        print('LDA TFIDF with cvalue:')
-        start = time()
-        topic_model = TopicModeling(id2word=id2word, corpus=csr_tfidf, doc2class=doc2class, num_cores=30)
-        topics = topic_model.topicsLDA(num_topics=num_topics, num_iterations=num_iter)
-        for topic in topics:
-            wTopics = []
-            for words in topic[1]:
-                wTopics.append(words[0])
-            print("Topic", topic[0], wTopics)
-        with ProcessPoolExecutor(max_workers=no_threads) as worker:
-            for result in worker.map(getLabel, topic_model.topicDocsLDA):
-                if result:
-                    TMlabelsLDATFIDF.append(result)
-        for topiclabel in TMlabelsLDATFIDF:
-            print(topiclabel)
-        end = time()
-        print("LDA TFIDF c-value time", (end - start))
-        print('LDA TFIDF ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
+    #     print('LDA TFIDF with cvalue:')
+        
+    #     topicNGrams = {}
+    #     topicNGramsList = []
+    #     tmLabels = []
+
+    #     start = time()
+    #     topic_model = TopicModeling(id2word=id2word, corpus=csr_tfidf, doc2class=doc2class, num_cores=30)
+    #     topics = topic_model.topicsLDA(num_topics=num_topics, num_iterations=num_iter)
+    #     for topic in topics:
+    #         wTopics = []
+    #         for words in topic[1]:
+    #             wTopics.append(words[0])
+    #         print("Topic", topic[0], wTopics)
+    #     with ProcessPoolExecutor(max_workers=no_threads) as worker:
+    #         for result in worker.map(getLabel, topic_model.topicDocsLDA):
+    #             if result:
+    #                 tmLabels.append(result)
+    #     for topiclabel in tmLabels:
+    #         print(topiclabel)
+    #     end = time()
+    #     print("LDA TFIDF c-value time", (end - start))
+    #     print('LDA TFIDF ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
 
 
-    print("\n\n=========================================================")
-    print("==========================Okapi==========================")
-    print("=========================================================\n\n")
-    for i in range(0, no_tests):
-        print('NMF Okapi with cvalue:')
-        topic_model = TopicModeling(id2word=id2word, corpus=csr_okapi, doc2class=doc2class, num_cores=30)
-        start = time()
-        topics = topic_model.topicsNMF(num_topics=num_topics, num_iterations=num_iter)
-        for topic in topics:
-            wTopics = []
-            for words in topic[1]:
-                wTopics.append(words[0])
-            print("Topic", topic[0], wTopics)
-        with ProcessPoolExecutor(max_workers=no_threads) as worker:
-            for result in worker.map(getLabel, topic_model.topicDocsNMF):
-                if result:
-                    TMlabelsNMFOkapi.append(result)
-        for topiclabel in TMlabelsNMFOkapi:
-            print(topiclabel)
-        end = time()
-        print("NMF Okapi c-value time", (end - start))
-        print('NMF Okapi ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicNMF))
+    # print("\n\n=========================================================")
+    # print("==========================Okapi==========================")
+    # print("=========================================================\n\n")
+    # for i in range(0, no_tests):
+    #     print('NMF Okapi with cvalue:')
 
-        print("\n*********************************************************\n")
+    #     topicNGrams = {}
+    #     topicNGramsList = []
+    #     tmLabels = []
 
-        print('LDA Okapi with cvalue:')
-        start = time()
-        topic_model = TopicModeling(id2word=id2word, corpus=csr_okapi, doc2class=doc2class, num_cores=30)
-        topics = topic_model.topicsLDA(num_topics=num_topics, num_iterations=num_iter)
-        for topic in topics:
-            wTopics = []
-            for words in topic[1]:
-                wTopics.append(words[0])
-            print("Topic", topic[0], wTopics)
-        with ProcessPoolExecutor(max_workers=no_threads) as worker:
-            for result in worker.map(getLabel, topic_model.topicDocsLDA):
-                if result:
-                    TMlabelsLDAOkapi.append(result)
-        for topiclabel in TMlabelsLDAOkapi:
-            print(topiclabel)
-        end = time()
-        print("LDA Okapi c-value time", (end - start))
-        print('LDA Okapi ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
+    #     topic_model = TopicModeling(id2word=id2word, corpus=csr_okapi, doc2class=doc2class, num_cores=30)
+    #     start = time()
+    #     topics = topic_model.topicsNMF(num_topics=num_topics, num_iterations=num_iter)
+    #     for topic in topics:
+    #         wTopics = []
+    #         for words in topic[1]:
+    #             wTopics.append(words[0])
+    #         print("Topic", topic[0], wTopics)
+    #     with ProcessPoolExecutor(max_workers=no_threads) as worker:
+    #         for result in worker.map(getLabel, topic_model.topicDocsNMF):
+    #             if result:
+    #                 tmLabels.append(result)
+    #     for topiclabel in tmLabels:
+    #         print(topiclabel)
+    #     end = time()
+    #     print("NMF Okapi c-value time", (end - start))
+    #     print('NMF Okapi ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicNMF))
+
+    #     print("\n*********************************************************\n")
+
+    #     print('LDA Okapi with cvalue:')
+        
+    #     topicNGrams = {}
+    #     topicNGramsList = []
+    #     tmLabels = []
+
+    #     start = time()
+    #     topic_model = TopicModeling(id2word=id2word, corpus=csr_okapi, doc2class=doc2class, num_cores=30)
+    #     topics = topic_model.topicsLDA(num_topics=num_topics, num_iterations=num_iter)
+    #     for topic in topics:
+    #         wTopics = []
+    #         for words in topic[1]:
+    #             wTopics.append(words[0])
+    #         print("Topic", topic[0], wTopics)
+    #     with ProcessPoolExecutor(max_workers=no_threads) as worker:
+    #         for result in worker.map(getLabel, topic_model.topicDocsLDA):
+    #             if result:
+    #                 tmLabels.append(result)
+    #     for topiclabel in tmLabels:
+    #         print(topiclabel)
+    #     end = time()
+    #     print("LDA Okapi c-value time", (end - start))
+    #     print('LDA Okapi ARI c-value:', evaluation_measures.adj_rand_index(topic_model.doc2topicLDA))
