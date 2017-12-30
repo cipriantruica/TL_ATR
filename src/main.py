@@ -142,10 +142,13 @@ def buildMatrix(documents, k1=1.6, b=0.75):
 
 def getLabel(elem):
     allCandidateNGrams = []
+    docsTopics = list(elem['docs'])
     for doc in docs:
-        for docTopic in elem['docs']:
-            if doc['docID'] == id2doc[docTopic]:
-                allCandidateNGrams += doc['candidateNGrams']
+        if doc2id[doc['docID']] in docsTopics:
+            allCandidateNGrams += doc['candidateNGrams']
+            docsTopics.remove(doc2id[doc['docID']])
+        if not docsTopics:
+            break
     # get the frequency for all the candidate n-grams
     allCandidateNGramsFreq = Counter(allCandidateNGrams)
     lt = AutomaticTermExtraction(text="", grammar=grammar, punctuation=punctuation)    
