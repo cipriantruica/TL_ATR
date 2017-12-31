@@ -154,7 +154,7 @@ def getTopicLabels(elem):
     lt = AutomaticTermExtraction(text="", grammar=grammar, punctuation=punctuation)    
     lt.computeCValue(treshold=threshold, candidateNGramsFreq=allCandidateNGramsFreq)
     label = sorted(lt.cvalue, key = lt.cvalue.get, reverse=True)[0]
-    print("Finished labeling topic:", elem["topic_id"], "with lable", lable)
+    print("Finished labeling topic:", elem["topic_id"], "with lable", label)
     return {"topic": elem["topic_id"], "label": label}
 
 def getNGramsTopic(elem):
