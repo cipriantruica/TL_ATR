@@ -17,6 +17,7 @@ from tm import TopicModeling
 import evaluation_measures
 import numpy as np
 import sys
+import math
 from time import time
 from collections import Counter
 
@@ -150,15 +151,6 @@ def buildMatrix(documents, k1=1.6, b=0.75):
     csr_tfidf = csr_matrix((data_tfidf, (row, col)), dtype=np.float64)
     csr_okapi = csr_matrix((data_okapi, (row, col)), dtype=np.float64)
     return csr_tfidf, csr_okapi
-
-def getTopicLabels(elem):
-    # get the frequency for all the candidate n-grams
-    allCandidateNGramsFreq = Counter(elem["ngram"])
-    lt = AutomaticTermExtraction(text="", grammar=grammar, punctuation=punctuation)    
-    lt.computeCValue(treshold=threshold, candidateNGramsFreq=allCandidateNGramsFreq)
-    label = sorted(lt.cvalue, key = lt.cvalue.get, reverse=True)[0]
-    print("Finished labeling topic:", elem["topic_id"], "with lable", label)
-    return {"topic": elem["topic_id"], "label": label}
 
 def getNGramsTopic(elem):
     for td in topicDocs:
