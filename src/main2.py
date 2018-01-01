@@ -258,6 +258,7 @@ if __name__ == "__main__":
 
         # get the lable for each topic
         for topic_id in topicNGrams:
+            it0 = time()
             print("Starting labeling topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
@@ -267,7 +268,8 @@ if __name__ == "__main__":
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
-            print("Finished labeling topic:", topic_id, "with", label)
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -312,6 +314,7 @@ if __name__ == "__main__":
         print("Starting the labling process...")
 
         for topic_id in topicNGrams:
+            it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
@@ -321,7 +324,8 @@ if __name__ == "__main__":
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
-            print("Finished labeling topic:", topic_id, "with", label)
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -371,6 +375,7 @@ if __name__ == "__main__":
 
        # get the lable for each topic
         for topic_id in topicNGrams:
+            it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
@@ -380,7 +385,8 @@ if __name__ == "__main__":
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
-            print("Finished labeling topic:", topic_id, "with", label)
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -426,6 +432,7 @@ if __name__ == "__main__":
         
         # get the lable for each topic
         for topic_id in topicNGrams:
+            it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
@@ -435,7 +442,8 @@ if __name__ == "__main__":
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
-            print("Finished labeling topic:", topic_id, "with", label)
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
 
         for topiclabel in tmLabels:
             print(topiclabel)
