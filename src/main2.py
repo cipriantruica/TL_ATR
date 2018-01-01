@@ -253,11 +253,11 @@ if __name__ == "__main__":
             it0 = time()
             print("Starting labeling topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
-            weightedLebels = []
+            weightedLebels = {}
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
                 for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
-                        weightedLebels.append(result)
+                        weightedLebels.update(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
@@ -309,11 +309,11 @@ if __name__ == "__main__":
             it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
-            weightedLebels = []
+            weightedLebels = {}
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
                 for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
-                        weightedLebels.append(result)
+                        weightedLebels.update(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
@@ -370,11 +370,11 @@ if __name__ == "__main__":
             it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
-            weightedLebels = []
+            weightedLebels = {}
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
                 for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
-                        weightedLebels.append(result)
+                        weightedLebels.update(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
@@ -427,11 +427,11 @@ if __name__ == "__main__":
             it0 = time()
             print("Starting labeling for topic:", topic_id)
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
-            weightedLebels = []
+            weightedLebels = {}
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
                 for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
-                        weightedLebels.append(result)
+                        weightedLebels.update(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
