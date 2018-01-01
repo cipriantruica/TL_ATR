@@ -165,7 +165,7 @@ def getNGramsTopic(elem):
         if doc2id[elem['docID']] in td['docs']:
             return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams']}
 
-def computeCValueLabels(ngram):
+def computeLabelsCValue(ngram):
     s = 0
     c = 0
     for nested_ngram in candidateNGramsFreq:
@@ -262,7 +262,7 @@ if __name__ == "__main__":
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
-                for result in worker.map(computeCValue, candidateNGramsFreq):
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
@@ -316,7 +316,7 @@ if __name__ == "__main__":
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
-                for result in worker.map(computeCValue, candidateNGramsFreq):
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
@@ -375,7 +375,7 @@ if __name__ == "__main__":
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
-                for result in worker.map(computeCValue, candidateNGramsFreq):
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
@@ -430,7 +430,7 @@ if __name__ == "__main__":
             candidateNGramsFreq = Counter(topicNGrams[topic_id])
             weightedLebels = []
             with ProcessPoolExecutor(max_workers=no_threads) as worker:
-                for result in worker.map(computeCValue, candidateNGramsFreq):
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
                     if result:
                         weightedLebels.append(result)
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
