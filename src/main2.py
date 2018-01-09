@@ -83,6 +83,7 @@ tags = set()
 i = 0
 
 treshold = 1.0
+min_ngram_len = 2
 candidateNGramsFreq = []
 
 def processElement(elem):
@@ -158,6 +159,8 @@ def getNGramsTopic(elem):
             return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams']}
 
 def computeLabelsCValue(ngram):
+    if len(ngram) < min_ngram_len:
+        return None
     s = 0
     c = 0
     for nested_ngram in candidateNGramsFreq:
@@ -171,6 +174,8 @@ def computeLabelsCValue(ngram):
         cvalue = math.log(1 + len(ngram), 2) * (candidateNGramsFreq[ngram] - s/c)
     else:
         cvalue = math.log(1 + len(ngram), 2) * candidateNGramsFreq[ngram]
+    if cvalue < threshold:
+        return None
     return { ngram:  cvalue }
 
 # params:
