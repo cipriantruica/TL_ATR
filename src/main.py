@@ -94,6 +94,7 @@ def processElement(elem):
     doc['tag'] = elem['tags'][0]
     doc['terms'] = lt.getVocabulary()
     doc['candidateNGrams'] = lt.getCandidateNGrams()
+    doc['allNGrams'] = lt.getAllNGrams()
     l_tf = {}
     l_count = {}
     l_idf = {}

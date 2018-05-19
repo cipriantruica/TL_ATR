@@ -12,6 +12,7 @@ from nltk import word_tokenize
 from nltk import pos_tag
 from nltk import sent_tokenize
 from nltk import RegexpParser
+from nltk import ngrams
 from nltk.stem import WordNetLemmatizer
 from stop_words import get_stop_words
 from nltk.corpus import stopwords
@@ -30,6 +31,8 @@ class AutomaticTermExtraction:
         self.cvalue = {}
         self.vocabulary = set([])
         self.stopwords = self.stopWordsEN()
+        self.tokens = []
+        self.allNGrams = []
     
     def stopWordsEN(self):
         sw_stop_words = get_stop_words('en')
@@ -51,6 +54,7 @@ class AutomaticTermExtraction:
                     lemma_sentence.append((self.wnl.lemmatize(word_pos[0], pos), word_pos[1]))
                 else:
                     lemma_sentence.append((word_pos[0], word_pos[1]))
+                self.tokens.append(word_pos[0])
             # print(lemma_sentence)
             if len(lemma_sentence) > 0:
                 self.sentences.append(lemma_sentence)
@@ -110,3 +114,22 @@ class AutomaticTermExtraction:
 
     def getCandidateNGrams(self):
         return self.candidateNGrams
+
+    def getAllNGrams(self):
+        maxN = -1;
+        for elem in self.candidateNGrams:
+            if maxN > len(elem):
+                maxN = len(elem)
+
+
+        for n in range(1, maxN + 1):
+            nGramDic = {}
+            for ngram in ngrams(slef.tokens, n):
+                if nGramDic.get(ngram):
+                    nGramDic[ngram] += 1
+                else:
+                    nGramDic[ngram] = 1
+            self.allNGrams[n] = nGramDic
+
+        return self.allNGrams
+        
