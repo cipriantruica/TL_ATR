@@ -31,7 +31,6 @@ class AutomaticTermExtraction:
         self.cvalue = {}
         self.vocabulary = set([])
         self.stopwords = self.stopWordsEN()
-        self.tokens = []
         self.allNGrams = {}
     
     def stopWordsEN(self):
@@ -54,7 +53,6 @@ class AutomaticTermExtraction:
                     lemma_sentence.append((self.wnl.lemmatize(word_pos[0], pos), word_pos[1]))
                 else:
                     lemma_sentence.append((word_pos[0], word_pos[1]))
-                self.tokens.append(word_pos[0])
             # print(lemma_sentence)
             if len(lemma_sentence) > 0:
                 self.sentences.append(lemma_sentence)
@@ -116,20 +114,20 @@ class AutomaticTermExtraction:
         return self.candidateNGrams
 
     def getAllNGrams(self):
-        maxN = -1;
-        print(self.candidateNGramsFreq)
+        maxN = 2
         for elem in self.candidateNGramsFreq:
             if maxN < len(elem):
                 maxN = len(elem)
         print("maxN", maxN)
         for n in range(1, maxN + 1):
             nGramDic = {}
-            for ngram in ngrams(self.tokens, n):
-                if nGramDic.get(ngram):
-                    nGramDic[ngram] += 1
-                else:
-                    nGramDic[ngram] = 1
+            for sentence in self.sentences:
+                for ngram in ngrams(sentence, n):
+                    if nGramDic.get(ngram):
+                        nGramDic[ngram] += 1
+                    else:
+                        nGramDic[ngram] = 1
             self.allNGrams[n] = nGramDic
         print(self.allNGrams)
         return self.allNGrams
-        
+
