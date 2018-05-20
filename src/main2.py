@@ -156,7 +156,7 @@ def buildMatrix(documents, k1=1.6, b=0.75):
 def getNGramsTopic(elem):
     for td in topicDocs:
         if doc2id[elem['docID']] in td['docs']:
-            return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams']}
+            return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams'], 'allngrams': elem['allNGrams']}
 
 def computeLabelsCValue(ngram):
     if len(ngram) < min_ngram_len:
@@ -221,6 +221,7 @@ if __name__ == "__main__":
         print('NMF TFIDF with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -248,6 +249,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         intermediateTime2 = time()
         print("NMF TFIDF C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
@@ -266,7 +276,8 @@ if __name__ == "__main__":
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
-            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -281,6 +292,7 @@ if __name__ == "__main__":
         print('LDA TFIDF with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -305,6 +317,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         intermediateTime2 = time()
         print("LDA TFIDF C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
@@ -322,7 +343,8 @@ if __name__ == "__main__":
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
-            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -340,6 +362,7 @@ if __name__ == "__main__":
         print('NMF Okapi BM25 with cvalue:')
 
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -365,6 +388,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         intermediateTime2 = time()
         print("NMF Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
@@ -383,7 +415,8 @@ if __name__ == "__main__":
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
-            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -398,6 +431,7 @@ if __name__ == "__main__":
         print('LDA Okapi BM25 with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -422,6 +456,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         intermediateTime2 = time()
         print("LDA Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
@@ -440,7 +483,8 @@ if __name__ == "__main__":
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
-            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)

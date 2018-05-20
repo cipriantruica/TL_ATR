@@ -70,3 +70,14 @@ def purity(dic):
         p += mat[i,:].max()/n    
     return p
 
+def pmiBigram(NGrams, label):
+    w1, w2 = label
+    pw1 = NGrams[1][tuple(w1)]/float(sum(sum(NGrams[1].values())))
+    pw2 = NGrams[1][tuple(w2)]/float(sum(sum(NGrams[1].values())))
+    pw12 = NGrams[2][label] /float(sum(sum(NGrams[2].values())))
+    try:
+        pmi = math.log(pw12/float(pw1*pw2),2)
+        npmi = - pmi / math.log(pw12,2)
+        return pmi, npmi
+    except:
+        return -1, -1

@@ -161,7 +161,8 @@ def getTopicLabels(elem):
 def getNGramsTopic(elem):
     for td in topicDocs:
         if doc2id[elem['docID']] in td['docs']:
-            return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams']}
+            return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams'], 'allngrams': elem['allNGrams']}
+
 
 
 # params:
@@ -207,6 +208,7 @@ if __name__ == "__main__":
         print('NMF TFIDF with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -222,6 +224,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = []
 
         intermediateTime1 = time()
         print("NMF TFIDF C-Value TM Time:", (intermediateTime1 - startTime))
@@ -234,6 +237,16 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
+
 
         # create of list with dictionaries for topic/ngrams
         for topic_id in topicNGrams:
@@ -262,6 +275,7 @@ if __name__ == "__main__":
         print('LDA TFIDF with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -286,6 +300,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         for topic_id in topicNGrams:
             topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
@@ -315,6 +338,7 @@ if __name__ == "__main__":
         print('NMF Okapi BM25 with cvalue:')
 
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -340,6 +364,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         for topic_id in topicNGrams:
             topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
@@ -367,6 +400,7 @@ if __name__ == "__main__":
         print('LDA Okapi BM25 with cvalue:')
         
         topicNGrams = {}
+        topicAllNGrams = {}
         topicNGramsList = []
         tmLabels = []
 
@@ -391,6 +425,15 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
+                    for n in result['allngrams']:
+                        if topicAllNGrams[result["topic_id"]].get(n):
+                            for ngram in result['allngrams'][n]:
+                                if topicAllNGrams[result["topic_id"]][n].get(ngram):
+                                    topicAllNGrams[result["topic_id"]][n][ngram] += result['allngrams'][n][ngram]
+                                else:
+                                    topicAllNGrams[result["topic_id"]][n][ngram] = result['allngrams'][n][ngram]
+                        else:
+                            topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
         for topic_id in topicNGrams:
             topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})

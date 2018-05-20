@@ -32,7 +32,7 @@ class AutomaticTermExtraction:
         self.vocabulary = set([])
         self.stopwords = self.stopWordsEN()
         self.tokens = []
-        self.allNGrams = []
+        self.allNGrams = {}
     
     def stopWordsEN(self):
         sw_stop_words = get_stop_words('en')
@@ -124,7 +124,7 @@ class AutomaticTermExtraction:
 
         for n in range(1, maxN + 1):
             nGramDic = {}
-            for ngram in ngrams(slef.tokens, n):
+            for ngram in ngrams(self.tokens, n):
                 if nGramDic.get(ngram):
                     nGramDic[ngram] += 1
                 else:
