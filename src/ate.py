@@ -55,7 +55,9 @@ class AutomaticTermExtraction:
                 if pos in ['n', 'a', 'v', 'r']:
                     word = self.wnl.lemmatize(word_pos[0], pos)
                 lemma_sentence.append((word, word_pos[1]))
-                tokens.append(word)
+                # remove punctuation
+                if word not in '!,.:;?-':
+                    tokens.append(word)
 
             # print(lemma_sentence)
             if len(lemma_sentence) > 0:
