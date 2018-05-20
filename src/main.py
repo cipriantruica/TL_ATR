@@ -17,6 +17,7 @@ from tm import TopicModeling
 import evaluation_measures
 import numpy as np
 import sys
+import math
 from time import time
 from collections import Counter
 
@@ -80,6 +81,10 @@ topicNGramsList = []
 no_threads = cpu_count()
 tags = set()
 i = 0
+
+treshold = 1.0
+min_ngram_len = 2
+candidateNGramsFreq = []
 
 def processElement(elem):
     # print('process elem')
@@ -149,21 +154,30 @@ def buildMatrix(documents, k1=1.6, b=0.75):
     csr_okapi = csr_matrix((data_okapi, (row, col)), dtype=np.float64)
     return csr_tfidf, csr_okapi
 
-def getTopicLabels(elem):
-    # get the frequency for all the candidate n-grams
-    allCandidateNGramsFreq = Counter(elem["ngram"])
-    lt = AutomaticTermExtraction(text="", grammar=grammar, punctuation=punctuation)    
-    lt.computeCValue(treshold=threshold, candidateNGramsFreq=allCandidateNGramsFreq)
-    label = sorted(lt.cvalue, key = lt.cvalue.get, reverse=True)[0]
-    print("Finished labeling topic:", elem["topic_id"], "with lable", label)
-    return {"topic": elem["topic_id"], "label": label}
-
 def getNGramsTopic(elem):
     for td in topicDocs:
         if doc2id[elem['docID']] in td['docs']:
             return {"topic_id": td["topic_id"], "ngram": elem['candidateNGrams'], 'allngrams': elem['allNGrams']}
 
-
+def computeLabelsCValue(ngram):
+    if len(ngram) < min_ngram_len:
+        return None
+    s = 0
+    c = 0
+    for nested_ngram in candidateNGramsFreq:
+        if set(ngram).issubset(set(nested_ngram)) and ngram != nested_ngram: 
+            c += 1
+            s += candidateNGramsFreq[nested_ngram]
+            for t_ngram in candidateNGramsFreq:
+                if set(nested_ngram).issubset(set(t_ngram)) and t_ngram != nested_ngram and ngram != t_ngram and set(ngram).issubset(set(t_ngram)):
+                    s -= candidateNGramsFreq[t_ngram]
+    if c > 0:
+        cvalue = math.log(1 + len(ngram), 2) * (candidateNGramsFreq[ngram] - s/c)
+    else:
+        cvalue = math.log(1 + len(ngram), 2) * candidateNGramsFreq[ngram]
+    if cvalue < threshold:
+        return None
+    return { ngram:  cvalue }
 
 # params:
 # dbname Database
@@ -172,18 +186,22 @@ if __name__ == "__main__":
     dbname = sys.argv[1]
     num_iter = int(sys.argv[2])
     no_tests = int(sys.argv[3])
-
+    print("Connecting to database...")
     conn = MongoDBConnector(dbname=dbname)
+    print("Connected!")
     # get all the words from the vocabulary
+
+    print("Vocabulary...")
     voc = conn.getRecords(collection='vocabulary', projection={'word':1, 'IDF': 1})
 
     with ProcessPoolExecutor(max_workers=no_threads) as worker:
         for result in worker.map(processVocabulary, voc):
             if result:
                 wordIDF.update(result)
-
+    print("Vocabulary processed!")
     # get all the documents
     # filter={"_id": {"$in" : ["2", "5", "4", "3", "6", "7", "9", "8", "1", "13", "463", "465", "464", "466", "467", "468", "470", "469", "472", "473"]}},
+    print("Documents...")
     documents = conn.getRecords(collection='documents', projection={'cleanText': 1, 'tags': 1, 'words': 1})
     
     with ProcessPoolExecutor(max_workers=no_threads) as worker:
@@ -192,9 +210,12 @@ if __name__ == "__main__":
                 docs.append(result)
     conn.closeConection()
 
+    print("Documents processed!")
     print(len(docs))
-    
+
+    print("Vectorisation started...")
     csr_tfidf, csr_okapi = buildMatrix(documents=docs)
+    print("Vectorisation processed!")
 
     num_topics = len(tags)
     print('Num topics', num_topics)
@@ -224,7 +245,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
-            topicAllNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("NMF TFIDF C-Value TM Time:", (intermediateTime1 - startTime))
@@ -247,20 +268,26 @@ if __name__ == "__main__":
                         else:
                             topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
-
-        # create of list with dictionaries for topic/ngrams
-        for topic_id in topicNGrams:
-            topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
-        
         intermediateTime2 = time()
         print("NMF TFIDF C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labling process...")
 
         # get the lable for each topic
-        with ProcessPoolExecutor(max_workers=num_topics) as worker:
-            for result in worker.map(getTopicLabels, topicNGramsList):
-                if result:
-                    tmLabels.append(result)
+        for topic_id in topicNGrams:
+            it0 = time()
+            print("Starting labeling topic:", topic_id)
+            candidateNGramsFreq = Counter(topicNGrams[topic_id])
+            weightedLebels = {}
+            with ProcessPoolExecutor(max_workers=no_threads) as worker:
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
+                    if result:
+                        weightedLebels.update(result)
+            label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
+            tmLabels.append({"topic": topic_id, "label": label})
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -273,7 +300,7 @@ if __name__ == "__main__":
         print("\n*********************************************************\n")
 
         print('LDA TFIDF with cvalue:')
-        
+
         topicNGrams = {}
         topicAllNGrams = {}
         topicNGramsList = []
@@ -290,6 +317,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("LDA TFIDF C-Value TM Time:", (intermediateTime1 - startTime))
@@ -310,21 +338,29 @@ if __name__ == "__main__":
                         else:
                             topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
-        for topic_id in topicNGrams:
-            topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
-
         intermediateTime2 = time()
         print("LDA TFIDF C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labling process...")
 
-        with ProcessPoolExecutor(max_workers=num_topics) as worker:
-            for result in worker.map(getTopicLabels, topicNGramsList):
-                if result:
-                    tmLabels.append(result)
+        for topic_id in topicNGrams:
+            it0 = time()
+            print("Starting labeling for topic:", topic_id)
+            candidateNGramsFreq = Counter(topicNGrams[topic_id])
+            weightedLebels = {}
+            with ProcessPoolExecutor(max_workers=no_threads) as worker:
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
+                    if result:
+                        weightedLebels.update(result)
+            label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
+            tmLabels.append({"topic": topic_id, "label": label})
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
-      
+
         endTime = time()
         print("LDA TFIDF C-Value Labels Time:", (endTime - intermediateTime2))
         print("LDA TFIDF C-Value Total Time:", (endTime - startTime))
@@ -343,7 +379,7 @@ if __name__ == "__main__":
         tmLabels = []
 
         topic_model = TopicModeling(id2word=id2word, corpus=csr_okapi, doc2class=doc2class, num_cores=30)
-        
+
         startTime = time()
         print("Starting the TM process...")
 
@@ -354,6 +390,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("NMF Okapi BM25 C-Value TM Time:", (intermediateTime1 - startTime))
@@ -374,18 +411,26 @@ if __name__ == "__main__":
                         else:
                             topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
-        for topic_id in topicNGrams:
-            topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
-
         intermediateTime2 = time()
         print("NMF Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labling process...")
 
-        
-        with ProcessPoolExecutor(max_workers=num_topics) as worker:
-            for result in worker.map(getTopicLabels, topicNGramsList):
-                if result:
-                    tmLabels.append(result)
+       # get the lable for each topic
+        for topic_id in topicNGrams:
+            it0 = time()
+            print("Starting labeling for topic:", topic_id)
+            candidateNGramsFreq = Counter(topicNGrams[topic_id])
+            weightedLebels = {}
+            with ProcessPoolExecutor(max_workers=no_threads) as worker:
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
+                    if result:
+                        weightedLebels.update(result)
+            label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
+            tmLabels.append({"topic": topic_id, "label": label})
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -398,7 +443,7 @@ if __name__ == "__main__":
         print("\n*********************************************************\n")
 
         print('LDA Okapi BM25 with cvalue:')
-        
+
         topicNGrams = {}
         topicAllNGrams = {}
         topicNGramsList = []
@@ -415,6 +460,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("LDA Okapi BM25 C-Value TM Time:", (intermediateTime1 - startTime))
@@ -435,17 +481,26 @@ if __name__ == "__main__":
                         else:
                             topicAllNGrams[result["topic_id"]][n] = result['allngrams'][n]
 
-        for topic_id in topicNGrams:
-            topicNGramsList.append({"topic_id": topic_id, 'ngram': topicNGrams[topic_id]})
-
         intermediateTime2 = time()
         print("LDA Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labeling process...")
-        
-        with ProcessPoolExecutor(max_workers=num_topics) as worker:
-            for result in worker.map(getTopicLabels, topicNGramsList):
-                if result:
-                    tmLabels.append(result)
+
+        # get the lable for each topic
+        for topic_id in topicNGrams:
+            it0 = time()
+            print("Starting labeling for topic:", topic_id)
+            candidateNGramsFreq = Counter(topicNGrams[topic_id])
+            weightedLebels = {}
+            with ProcessPoolExecutor(max_workers=no_threads) as worker:
+                for result in worker.map(computeLabelsCValue, candidateNGramsFreq):
+                    if result:
+                        weightedLebels.update(result)
+            label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
+            tmLabels.append({"topic": topic_id, "label": label})
+            it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
+            pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
+            print("pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
