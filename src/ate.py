@@ -117,7 +117,9 @@ class AutomaticTermExtraction:
 
     def getAllNGrams(self):
         maxN = -1;
-        for elem in self.candidateNGrams:
+        print(self.candidateNGramsFreq)
+        for elem in self.candidateNGramsFreq:
+            print(elem)
             if maxN > len(elem):
                 maxN = len(elem)
         print(maxN)
