@@ -119,10 +119,9 @@ class AutomaticTermExtraction:
         maxN = -1;
         print(self.candidateNGramsFreq)
         for elem in self.candidateNGramsFreq:
-            print(elem)
-            if maxN > len(elem):
+            if maxN < len(elem):
                 maxN = len(elem)
-        print(maxN)
+        print("maxN", maxN)
         for n in range(1, maxN + 1):
             nGramDic = {}
             for ngram in ngrams(self.tokens, n):
@@ -130,7 +129,6 @@ class AutomaticTermExtraction:
                     nGramDic[ngram] += 1
                 else:
                     nGramDic[ngram] = 1
-            print(nGramDic)
             self.allNGrams[n] = nGramDic
         print(self.allNGrams)
         return self.allNGrams
