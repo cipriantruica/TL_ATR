@@ -71,13 +71,15 @@ def purity(dic):
     return p
 
 def pmiBigram(NGrams, label):
+    print(NGrams)
     w1, w2 = label
-    pw1 = NGrams[1][tuple(w1)]/float(sum(sum(NGrams[1].values())))
-    pw2 = NGrams[1][tuple(w2)]/float(sum(sum(NGrams[1].values())))
-    pw12 = NGrams[2][label] /float(sum(sum(NGrams[2].values())))
+    pw1 = NGrams[1][tuple(w1)]/float(sum(NGrams[1].values()))
+    pw2 = NGrams[1][tuple(w2)]/float(sum(NGrams[1].values()))
+    pw12 = NGrams[2][label] /float(sum(NGrams[2].values()))
     try:
         pmi = math.log(pw12/float(pw1*pw2),2)
         npmi = - pmi / math.log(pw12,2)
         return pmi, npmi
-    except:
+    except Exception as exp:
+        print(exp)
         return -1, -1

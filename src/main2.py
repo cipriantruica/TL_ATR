@@ -481,7 +481,9 @@ if __name__ == "__main__":
         intermediateTime2 = time()
         print("LDA Okapi BM25 C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labeling process...")
-        
+
+        print(topicAllNGrams)
+
         # get the lable for each topic
         for topic_id in topicNGrams:
             it0 = time()
