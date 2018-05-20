@@ -26,6 +26,7 @@ class AutomaticTermExtraction:
         self.punctuation = punctuation
         self.wnl = WordNetLemmatizer()
         self.sentences = []
+        self.sentencesTokens = []
         self.candidateNGrams = []
         self.candidateNGramsFreq = {}
         self.cvalue = {}
@@ -47,15 +48,20 @@ class AutomaticTermExtraction:
     def getLematizedSentences(self):
         for sentence in sent_tokenize(self.text):
             lemma_sentence = []
+            tokens = []
             for word_pos in pos_tag(word_tokenize(self.removePunctuationText(sentence))):
                 pos = word_pos[1][0].lower().replace('j', 'a')
+                word = word_pos[0]
                 if pos in ['n', 'a', 'v', 'r']:
-                    lemma_sentence.append((self.wnl.lemmatize(word_pos[0], pos), word_pos[1]))
-                else:
-                    lemma_sentence.append((word_pos[0], word_pos[1]))
+                    word = self.wnl.lemmatize(word_pos[0], pos)
+                lemma_sentence.append((word, word_pos[1]))
+                tokens.append(word)
+
             # print(lemma_sentence)
             if len(lemma_sentence) > 0:
                 self.sentences.append(lemma_sentence)
+            if len(tokens) > 0:
+                self.sentencesTokens.append(tokens)
 
 
     def getNGrams(self):
@@ -115,19 +121,22 @@ class AutomaticTermExtraction:
 
     def getAllNGrams(self):
         maxN = 2
-        for elem in self.candidateNGramsFreq:
-            if maxN < len(elem):
-                maxN = len(elem)
+        for ngram in self.cvalue:
+            if maxN < len(ngram):
+                maxN = len(ngram)
         print("maxN", maxN)
+
         for n in range(1, maxN + 1):
             nGramDic = {}
-            for sentence in self.sentences:
+            for sentence in self.sentencesTokens:
                 for ngram in ngrams(sentence, n):
                     if nGramDic.get(ngram):
                         nGramDic[ngram] += 1
                     else:
                         nGramDic[ngram] = 1
             self.allNGrams[n] = nGramDic
+        if len(self.allNGrams) == 0:
+            print("Problema")
         print(self.allNGrams)
         return self.allNGrams
 
