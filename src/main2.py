@@ -258,7 +258,6 @@ if __name__ == "__main__":
             for result in worker.map(getNGramsTopic, docs):
                 if result:
                     topicNGrams[result["topic_id"]] += result['ngram']
-                    print(result['allngrams'])
                     for n in result['allngrams']:
                         if topicAllNGrams[result["topic_id"]].get(n):
                             for ngram in result['allngrams'][n]:
