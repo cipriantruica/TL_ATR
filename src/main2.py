@@ -245,6 +245,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("NMF TFIDF C-Value TM Time:", (intermediateTime1 - startTime))
@@ -315,6 +316,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("LDA TFIDF C-Value TM Time:", (intermediateTime1 - startTime))
@@ -386,6 +388,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("NMF Okapi BM25 C-Value TM Time:", (intermediateTime1 - startTime))
@@ -454,6 +457,7 @@ if __name__ == "__main__":
                 wTopics.append(words[0])
             print("Topic", topic[0], wTopics)
             topicNGrams[topic[0]] = []
+            topicAllNGrams[topic[0]] = {}
 
         intermediateTime1 = time()
         print("LDA Okapi BM25 C-Value TM Time:", (intermediateTime1 - startTime))
