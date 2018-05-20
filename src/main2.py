@@ -273,12 +273,6 @@ if __name__ == "__main__":
         print("NMF TFIDF C-Value N-Grams Time:", (intermediateTime2 - intermediateTime1))
         print("Starting the labling process...")
 
-        print("\n\n=============================================\n\n")
-
-        print(topicAllNGrams)
-
-        print("\n\n=============================================\n\n")
-
         # get the lable for each topic
         for topic_id in topicNGrams:
             it0 = time()
@@ -292,8 +286,9 @@ if __name__ == "__main__":
             label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
             tmLabels.append({"topic": topic_id, "label": label})
             it1 = time()
+            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
             pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
-            print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
+            print("pmi:", pmi, "npmi:", npmi)
 
         for topiclabel in tmLabels:
             print(topiclabel)
@@ -360,8 +355,9 @@ if __name__ == "__main__":
     #         label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
     #         tmLabels.append({"topic": topic_id, "label": label})
     #         it1 = time()
+    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
     #         pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
-    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
+    #         print("pmi:", pmi, "npmi:", npmi)
     #
     #     for topiclabel in tmLabels:
     #         print(topiclabel)
@@ -433,8 +429,9 @@ if __name__ == "__main__":
     #         label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
     #         tmLabels.append({"topic": topic_id, "label": label})
     #         it1 = time()
+    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
     #         pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
-    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
+    #         print("pmi:", pmi, "npmi:", npmi)
     #
     #     for topiclabel in tmLabels:
     #         print(topiclabel)
@@ -502,8 +499,9 @@ if __name__ == "__main__":
     #         label = sorted(weightedLebels, key = weightedLebels.get, reverse=True)[0]
     #         tmLabels.append({"topic": topic_id, "label": label})
     #         it1 = time()
+    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0))
     #         pmi, npmi = evaluation_measures.pmiBigram(topicAllNGrams[topic_id], label)
-    #         print("Finished labeling topic:", topic_id, "with", label, "in", (it1 - it0), "pmi:", pmi, "npmi:", npmi)
+    #         print("pmi:", pmi, "npmi:", npmi)
     #
     #     for topiclabel in tmLabels:
     #         print(topiclabel)

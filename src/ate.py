@@ -124,7 +124,6 @@ class AutomaticTermExtraction:
         for ngram in self.cvalue:
             if maxN < len(ngram):
                 maxN = len(ngram)
-        print("maxN", maxN)
 
         for n in range(1, maxN + 1):
             nGramDic = {}
@@ -135,8 +134,6 @@ class AutomaticTermExtraction:
                     else:
                         nGramDic[ngram] = 1
             self.allNGrams[n] = nGramDic
-        if len(self.allNGrams) == 0:
-            print("Problema")
-        print(self.allNGrams)
+
         return self.allNGrams
 
