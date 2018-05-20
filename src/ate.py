@@ -131,6 +131,8 @@ class AutomaticTermExtraction:
             nGramDic = {}
             for sentence in self.sentencesTokens:
                 for ngram in ngrams(sentence, n):
+                    if n == 1:
+                        ngram = ngram[0]
                     if nGramDic.get(ngram):
                         nGramDic[ngram] += 1
                     else:
