@@ -99,6 +99,7 @@ def processElement(elem):
     doc['tag'] = elem['tags'][0]
     doc['terms'] = lt.getVocabulary()
     doc['candidateNGrams'] = lt.getCandidateNGrams()
+    doc['allNGrams'] = lt.getAllNGrams()
     l_tf = {}
     l_count = {}
     l_idf = {}
@@ -185,18 +186,22 @@ if __name__ == "__main__":
     dbname = sys.argv[1]
     num_iter = int(sys.argv[2])
     no_tests = int(sys.argv[3])
-
+    print("Connecting to database...")
     conn = MongoDBConnector(dbname=dbname)
+    print("Connected!")
     # get all the words from the vocabulary
+
+    print("Vocabulary...")
     voc = conn.getRecords(collection='vocabulary', projection={'word':1, 'IDF': 1})
 
     with ProcessPoolExecutor(max_workers=no_threads) as worker:
         for result in worker.map(processVocabulary, voc):
             if result:
                 wordIDF.update(result)
-
+    print("Vocabulary processed!")
     # get all the documents
     # filter={"_id": {"$in" : ["2", "5", "4", "3", "6", "7", "9", "8", "1", "13", "463", "465", "464", "466", "467", "468", "470", "469", "472", "473"]}},
+    print("Documents...")
     documents = conn.getRecords(collection='documents', projection={'cleanText': 1, 'tags': 1, 'words': 1})
     
     with ProcessPoolExecutor(max_workers=no_threads) as worker:
@@ -205,9 +210,12 @@ if __name__ == "__main__":
                 docs.append(result)
     conn.closeConection()
 
+    print("Documents processed!")
     print(len(docs))
-    
+
+    print("Vectorisation started...")
     csr_tfidf, csr_okapi = buildMatrix(documents=docs)
+    print("Vectorisation processed!")
 
     num_topics = len(tags)
     print('Num topics', num_topics)
