@@ -1,1 +1,1 @@
-# Topic Labeling using Automatic Term Extraction
+# Topic Labeling using Automatic Term Recognition
