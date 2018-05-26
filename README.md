@@ -1,1 +1,1 @@
-# Topic Labeling using Automatic Term Recognition
+# Topic Labeling using Automatic (Domain-Specific) Term Recognition
