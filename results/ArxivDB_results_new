@@ -1,0 +1,451 @@
+Connecting to database...
+Connected!
+Vocabulary...
+Vocabulary processed!
+Documents...
+Documents processed!
+166512
+Vectorisation started...
+Vectorisation processed!
+Num topics 19
+len voc small: 81997
+
+
+=========================================================
+==========================TFIDF==========================
+=========================================================
+
+
+TFIDF
+NMF TFIDF with cvalue:
+Starting the TM process...
+Topic 0 ['optical', 'frequency', 'photon', 'laser', 'mode', 'light', 'high', 'wave', 'beam', 'cavity']
+Topic 1 ['distribution', 'random', 'method', 'function', 'probability', 'model', 'estimation', 'parameter', 'estimator', 'data']
+Topic 2 ['equation', 'solution', 'differential', 'nonlinear', 'wave', 'condition', 'method', 'problem', 'function', 'schr']
+Topic 3 ['higgs', 'mass', 'boson', 'standard', 'neutrino', 'decay', 'lhc', 'model', 'search', 'gev']
+Topic 4 ['star', 'galaxy', 'stellar', 'mass', 'observation', 'emission', 'ray', 'formation', 'line', 'gas']
+Topic 5 ['theory', 'field', 'gauge', 'symmetry', 'gravity', 'scalar', 'action', 'term', 'conformal', 'dimension']
+Topic 6 ['space', 'group', 'algebra', 'class', 'manifold', 'operator', 'mathbb', 'representation', 'theorem', 'case']
+Topic 7 ['channel', 'rate', 'capacity', 'user', 'scheme', 'network', 'transmission', 'communication', 'receiver', 'information']
+Topic 8 ['collision', 'energy', 'production', 'section', 'proton', 'cross', 'momentum', 'transverse', 'hadron', 'tev']
+Topic 9 ['quantum', 'state', 'system', 'entanglement', 'classical', 'qubit', 'mechanic', 'information', 'measurement', 'entropy']
+Topic 10 ['data', 'analysis', 'research', 'paper', 'approach', 'application', 'recent', 'information', 'development', 'tool']
+Topic 11 ['black', 'hole', 'horizon', 'gravitational', 'gravity', 'entropy', 'mass', 'spacetime', 'kerr', 'binary']
+Topic 12 ['phase', 'transition', 'temperature', 'critical', 'order', 'lattice', 'point', 'diagram', 'finite', 'behavior']
+Topic 13 ['quark', 'qcd', 'meson', 'mass', 'pi', 'chiral', 'lattice', 'decay', 'bar', 'heavy']
+Topic 14 ['cosmological', 'universe', 'matter', 'dark', 'inflation', 'cosmic', 'scale', 'cosmology', 'background', 'energy']
+Topic 15 ['network', 'neural', 'task', 'image', 'art', 'feature', 'deep', 'learning', 'performance', 'convolutional']
+Topic 16 ['algorithm', 'problem', 'graph', 'optimization', 'complexity', 'number', 'optimal', 'time', 'bound', 'method']
+Topic 17 ['dynamic', 'time', 'system', 'simulation', 'model', 'flow', 'particle', 'equilibrium', 'process', 'dynamical']
+Topic 18 ['magnetic', 'spin', 'electron', 'field', 'effect', 'interaction', 'energy', 'surface', 'material', 'electronic']
+NMF TFIDF C-Value TM Time: 116.39556908607483
+Starting the ngram process...
+NMF TFIDF C-Value N-Grams Time: 492.24190497398376
+Starting the labling process...
+Starting labeling topic: 0
+Finished labeling topic: 0 with ('single', 'photon') in 1163.0794088840485
+pmi: 6.163790516663023 npmi: 0.6156419656014279
+Starting labeling topic: 1
+Finished labeling topic: 1 with ('monte', 'carlo') in 8964.784546375275
+pmi: 10.1222010253231 npmi: 1.0116263779973493
+Starting labeling topic: 2
+Finished labeling topic: 2 with ('differential', 'equation') in 5301.983044624329
+pmi: 5.781199814167689 npmi: 0.6247598936278116
+Starting labeling topic: 3
+Finished labeling topic: 3 with ('dark', 'matter') in 2521.7449696063995
+pmi: 7.657547508120123 npmi: 0.9506179273932546
+Starting labeling topic: 4
+Finished labeling topic: 4 with ('x', 'ray') in 17256.407975435257
+pmi: 7.97807347329029 npmi: 0.886195908865019
+Starting labeling topic: 5
+Finished labeling topic: 5 with ('field', 'theory') in 2118.9461641311646
+pmi: 4.343715070465699 npmi: 0.5356634241466042
+Starting labeling topic: 6
+Finished labeling topic: 6 with ('mathbb', 'r') in 14818.822897434235
+pmi: 6.767371817553002 npmi: 0.6652383222692607
+Starting labeling topic: 7
+Finished labeling topic: 7 with ('upper', 'bound') in 1484.4957501888275
+pmi: 8.225353402134187 npmi: 0.806535483364833
+Starting labeling topic: 8
+Finished labeling topic: 8 with ('cross', 'section') in 2718.3516578674316
+pmi: 7.861695016474809 npmi: 1.0072779184778158
+Starting labeling topic: 9
+Finished labeling topic: 9 with ('quantum', 'system') in 10946.721373558044
+pmi: 3.2587486970117916 npmi: 0.3439213970267606
+Starting labeling topic: 10
+Finished labeling topic: 10 with ('social', 'network') in 3857.759109020233
+pmi: 6.23411056083009 npmi: 0.5704860959431088
+Starting labeling topic: 11
+Finished labeling topic: 11 with ('black', 'hole') in 1404.341374874115
+pmi: 5.973702523174918 npmi: 0.9984521430344714
+Starting labeling topic: 12
+Finished labeling topic: 12 with ('phase', 'transition') in 2057.3371777534485
+pmi: 5.10959431864327 npmi: 0.6544997409919768
+Starting labeling topic: 13
+Finished labeling topic: 13 with ('form', 'factor') in 2096.946018218994
+pmi: 8.811814573281165 npmi: 0.9314034208375727
+Starting labeling topic: 14
+Finished labeling topic: 14 with ('dark', 'matter') in 2056.235698223114
+pmi: 6.765655255576626 npmi: 0.8136205406451085
+Starting labeling topic: 15
+Finished labeling topic: 15 with ('neural', 'network') in 3078.6409878730774
+pmi: 6.311233035150327 npmi: 0.7629191198223716
+Starting labeling topic: 16
+Finished labeling topic: 16 with ('low', 'bound') in 9831.639340400696
+pmi: 7.174575475379461 npmi: 0.6883979618143643
+Starting labeling topic: 17
+Finished labeling topic: 17 with ('numerical', 'simulation') in 8010.5277943611145
+pmi: 7.52840671652848 npmi: 0.720101061101831
+Starting labeling topic: 18
+Finished labeling topic: 18 with ('magnetic', 'field') in 14448.158035755157
+pmi: 6.130950448156815 npmi: 0.7209362802579221
+{'topic': 0, 'label': ('single', 'photon')}
+{'topic': 1, 'label': ('monte', 'carlo')}
+{'topic': 2, 'label': ('differential', 'equation')}
+{'topic': 3, 'label': ('dark', 'matter')}
+{'topic': 4, 'label': ('x', 'ray')}
+{'topic': 5, 'label': ('field', 'theory')}
+{'topic': 6, 'label': ('mathbb', 'r')}
+{'topic': 7, 'label': ('upper', 'bound')}
+{'topic': 8, 'label': ('cross', 'section')}
+{'topic': 9, 'label': ('quantum', 'system')}
+{'topic': 10, 'label': ('social', 'network')}
+{'topic': 11, 'label': ('black', 'hole')}
+{'topic': 12, 'label': ('phase', 'transition')}
+{'topic': 13, 'label': ('form', 'factor')}
+{'topic': 14, 'label': ('dark', 'matter')}
+{'topic': 15, 'label': ('neural', 'network')}
+{'topic': 16, 'label': ('low', 'bound')}
+{'topic': 17, 'label': ('numerical', 'simulation')}
+{'topic': 18, 'label': ('magnetic', 'field')}
+NMF TFIDF C-Value Labels Time: 114136.98064756393
+NMF TFIDF C-Value Total Time: 114745.618121624
+NMF TFIDF ARI C-Value: 0.205393701968
+
+*********************************************************
+
+LDA TFIDF with cvalue:
+Starting the TM process...
+Destructor TM
+Topic 0 ['phys', 'rev', 'bf', 'lett', 'al', 'textbf', 'paper', 'fr', 'uhlenbeck', 'wavelet']
+Topic 1 ['molecule', 'molecular', 'hydrogen', 'van', 'calculation', 'ab', 'li', 'atom', 'initio', 'functional']
+Topic 2 ['group', 'algebra', 'manifold', 'space', 'lie', 'class', 'algebraic', 'mathbb', 'invariant', 'representation']
+Topic 3 ['equation', 'function', 'operator', 'solution', 'matrix', 'problem', 'graph', 'eigenvalue', 'result', 'polynomial']
+Topic 4 ['physic', 'development', 'research', 'recent', 'question', 'theory', 'understanding', 'year', 'mechanic', 'concept']
+Topic 5 ['graph', 'network', 'node', 'model', 'complexity', 'logic', 'population', 'problem', 'algorithm', 'tree']
+Topic 6 ['decay', 'neutrino', 'mass', 'gev', 'higgs', 'lhc', 'tev', 'detector', 'boson', 'standard']
+Topic 7 ['network', 'user', 'paper', 'performance', 'strategy', 'market', 'data', 'price', 'system', 'time']
+Topic 8 ['star', 'galaxy', 'ray', 'mass', 'observation', 'emission', 'stellar', 'source', 'high', 'line']
+Topic 9 ['system', 'dynamic', 'equation', 'equilibrium', 'particle', 'numerical', 'phase', 'model', 'time', 'energy']
+Topic 10 ['quark', 'qcd', 'collision', 'heavy', 'calculation', 'nuclear', 'energy', 'momentum', 'nucleon', 'meson']
+Topic 11 ['quantum', 'optical', 'photon', 'frequency', 'laser', 'atom', 'state', 'light', 'system', 'mode']
+Topic 12 ['network', 'task', 'image', 'neural', 'art', 'method', 'data', 'learning', 'feature', 'datasets']
+Topic 13 ['spin', 'magnetic', 'temperature', 'phase', 'topological', 'electron', 'band', 'state', 'transition', 'lattice']
+Topic 14 ['dark', 'cosmological', 'universe', 'matter', 'inflation', 'model', 'scale', 'planck', 'cosmology', 'cosmic']
+Topic 15 ['cell', 'surface', 'protein', 'material', 'elastic', 'molecular', 'concentration', 'force', 'simulation', 'polymer']
+Topic 16 ['theory', 'field', 'gauge', 'black', 'symmetry', 'hole', 'gravity', 'quantum', 'scalar', 'equation']
+Topic 17 ['channel', 'information', 'code', 'capacity', 'communication', 'rate', 'bound', 'scheme', 'bit', 'error']
+Topic 18 ['method', 'algorithm', 'problem', 'estimation', 'distribution', 'data', 'error', 'model', 'approach', 'function']
+LDA TFIDF C-Value TM Time: 2818.6395976543427
+Starting the ngram process...
+LDA TFIDF C-Value N-Grams Time: 499.6104271411896
+Starting the labling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('constacyclic', 'code') in 59.71433138847351
+pmi: 10.40952515047847 npmi: 0.9162006787131978
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('functional', 'theory') in 258.6049931049347
+pmi: 7.88739960723773 npmi: 0.7968196009260984
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('moduli', 'space') in 6843.741103172302
+pmi: 7.471658576931891 npmi: 0.6908048082062596
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('differential', 'equation') in 10969.591744422913
+pmi: 7.1763380798300584 npmi: 0.6738909259334195
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('quantum', 'mechanic') in 1009.7353439331055
+pmi: 6.893086996622073 npmi: 0.7050863636378928
+Starting labeling for topic: 5
+Finished labeling topic: 5 with ('low', 'bound') in 646.1205246448517
+pmi: 8.236325010420002 npmi: 0.734143419007067
+Starting labeling for topic: 6
+Finished labeling topic: 6 with ('standard', 'model') in 5521.990250349045
+pmi: 6.808538506999817 npmi: 0.7923030397376855
+Starting labeling for topic: 7
+Finished labeling topic: 7 with ('social', 'network') in 4115.16264462471
+pmi: 5.714344514400076 npmi: 0.5013077916190191
+Starting labeling for topic: 8
+Finished labeling topic: 8 with ('black', 'hole') in 24676.304284095764
+pmi: 9.416312124383596 npmi: 1.0019247639904445
+Starting labeling for topic: 9
+Finished labeling topic: 9 with ('magnetic', 'field') in 10203.917575359344
+pmi: 7.33684025102186 npmi: 0.7459635956957514
+Starting labeling for topic: 10
+Finished labeling topic: 10 with ('cross', 'section') in 5442.838781118393
+pmi: 9.013314029587505 npmi: 1.0034053287946432
+Starting labeling for topic: 11
+Finished labeling topic: 11 with ('single', 'photon') in 10563.622262477875
+pmi: 6.222200552616753 npmi: 0.6015843049876803
+Starting labeling for topic: 12
+Finished labeling topic: 12 with ('neural', 'network') in 5293.500779628754
+pmi: 6.535470195591286 npmi: 0.7366701638765392
+Starting labeling for topic: 13
+Finished labeling topic: 13 with ('magnetic', 'field') in 6013.692701101303
+pmi: 6.129680227420578 npmi: 0.6696580771007056
+Starting labeling for topic: 14
+Finished labeling topic: 14 with ('dark', 'matter') in 1791.8325395584106
+pmi: 6.808607373468402 npmi: 0.8074674709631823
+Starting labeling for topic: 15
+Finished labeling topic: 15 with ('molecular', 'dynamic') in 1538.4518294334412
+pmi: 7.105506839342525 npmi: 0.6174437651747073
+Starting labeling for topic: 16
+Finished labeling topic: 16 with ('black', 'hole') in 8730.652722120285
+pmi: 8.178523588003438 npmi: 1.0002179870920567
+Starting labeling for topic: 17
+Finished labeling topic: 17 with ('low', 'bound') in 1835.5947313308716
+pmi: 6.822802451423532 npmi: 0.6791696613491826
+Starting labeling for topic: 18
+Finished labeling topic: 18 with ('monte', 'carlo') in 11141.020344495773
+pmi: 10.5608153275304 npmi: 1.0115874925569617
+{'topic': 0, 'label': ('constacyclic', 'code')}
+{'topic': 1, 'label': ('functional', 'theory')}
+{'topic': 2, 'label': ('moduli', 'space')}
+{'topic': 3, 'label': ('differential', 'equation')}
+{'topic': 4, 'label': ('quantum', 'mechanic')}
+{'topic': 5, 'label': ('low', 'bound')}
+{'topic': 6, 'label': ('standard', 'model')}
+{'topic': 7, 'label': ('social', 'network')}
+{'topic': 8, 'label': ('black', 'hole')}
+{'topic': 9, 'label': ('magnetic', 'field')}
+{'topic': 10, 'label': ('cross', 'section')}
+{'topic': 11, 'label': ('single', 'photon')}
+{'topic': 12, 'label': ('neural', 'network')}
+{'topic': 13, 'label': ('magnetic', 'field')}
+{'topic': 14, 'label': ('dark', 'matter')}
+{'topic': 15, 'label': ('molecular', 'dynamic')}
+{'topic': 16, 'label': ('black', 'hole')}
+{'topic': 17, 'label': ('low', 'bound')}
+{'topic': 18, 'label': ('monte', 'carlo')}
+LDA TFIDF C-Value Labels Time: 116656.14686131477
+LDA TFIDF C-Value Total Time: 119974.3968861103
+LDA TFIDF ARI c-value: 0.206592950678
+
+
+=========================================================
+=======================Okapi BM25========================
+=========================================================
+
+
+NMF Okapi BM25 with cvalue:
+Destructor TM
+Starting the TM process...
+Topic 0 ['distribution', 'random', 'probability', 'model', 'process', 'estimator', 'parameter', 'estimation', 'statistical', 'asymptotic']
+Topic 1 ['mass', 'higgs', 'standard', 'boson', 'decay', 'neutrino', 'model', 'lhc', 'search', 'gev']
+Topic 2 ['equation', 'solution', 'differential', 'nonlinear', 'condition', 'schr', 'wave', 'existence', 'odinger', 'problem']
+Topic 3 ['optical', 'frequency', 'photon', 'laser', 'mode', 'light', 'wave', 'high', 'beam', 'cavity']
+Topic 4 ['star', 'galaxy', 'observation', 'ray', 'mass', 'stellar', 'emission', 'formation', 'source', 'high']
+Topic 5 ['cosmological', 'universe', 'inflation', 'matter', 'scalar', 'dark', 'gravity', 'scale', 'model', 'energy']
+Topic 6 ['group', 'algebra', 'representation', 'lie', 'finite', 'algebraic', 'module', 'category', 'product', 'subgroup']
+Topic 7 ['quantum', 'state', 'entanglement', 'classical', 'system', 'mechanic', 'qubit', 'information', 'measurement', 'entropy']
+Topic 8 ['function', 'operator', 'term', 'formula', 'matrix', 'expansion', 'expression', 'integral', 'form', 'coefficient']
+Topic 9 ['dynamic', 'system', 'time', 'particle', 'simulation', 'equilibrium', 'dynamical', 'numerical', 'evolution', 'model']
+Topic 10 ['black', 'hole', 'horizon', 'gravitational', 'gravity', 'entropy', 'spacetime', 'ad', 'kerr', 'schwarzschild']
+Topic 11 ['channel', 'rate', 'capacity', 'scheme', 'information', 'communication', 'user', 'transmission', 'receiver', 'code']
+Topic 12 ['algorithm', 'problem', 'method', 'optimization', 'paper', 'computational', 'approach', 'technique', 'performance', 'numerical']
+Topic 13 ['theory', 'field', 'gauge', 'symmetry', 'action', 'gravity', 'conformal', 'effective', 'loop', 'dimension']
+Topic 14 ['collision', 'production', 'quark', 'energy', 'section', 'proton', 'cross', 'momentum', 'heavy', 'hadron']
+Topic 15 ['network', 'neural', 'task', 'data', 'feature', 'art', 'learning', 'image', 'model', 'deep']
+Topic 16 ['graph', 'number', 'vertex', 'edge', 'bound', 'set', 'degree', 'random', 'tree', 'polynomial']
+Topic 17 ['space', 'manifold', 'dimensional', 'surface', 'dimension', 'condition', 'geometry', 'theorem', 'point', 'curvature']
+Topic 18 ['phase', 'transition', 'temperature', 'magnetic', 'spin', 'lattice', 'density', 'interaction', 'state', 'critical']
+NMF Okapi BM25 C-Value TM Time: 117.0488452911377
+Starting the ngram process...
+NMF Okapi BM25 C-Value N-Grams Time: 518.8184831142426
+Starting the labling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('monte', 'carlo') in 1115.171856880188
+pmi: 10.227135895646429 npmi: 1.0122710491757148
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('dark', 'matter') in 2890.519976377487
+pmi: 7.648872754445239 npmi: 0.9493265456782762
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('differential', 'equation') in 4981.587436676025
+pmi: 5.765631450159284 npmi: 0.6275295040678449
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('magnetic', 'field') in 12285.896118164062
+pmi: 6.978638016602813 npmi: 0.6649790854164617
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('x', 'ray') in 22018.316404104233
+pmi: 7.963483973259327 npmi: 0.873645251314367
+Starting labeling for topic: 5
+Finished labeling topic: 5 with ('dark', 'matter') in 1343.6585760116577
+pmi: 6.69991521991389 npmi: 0.7609710061787828
+Starting labeling for topic: 6
+Finished labeling topic: 6 with ('lie', 'algebra') in 3130.282131433487
+pmi: 5.564820337354823 npmi: 0.5712027003487813
+Starting labeling for topic: 7
+Finished labeling topic: 7 with ('quantum', 'system') in 4978.44221162796
+pmi: 3.3460322816977848 npmi: 0.35896838650393786
+Starting labeling for topic: 8
+Finished labeling topic: 8 with ('correlation', 'function') in 3706.3069546222687
+pmi: 5.570647858987853 npmi: 0.5445774038688207
+Starting labeling for topic: 9
+Finished labeling topic: 9 with ('numerical', 'simulation') in 10512.106720209122
+pmi: 7.51111103282308 npmi: 0.7071984519714141
+Starting labeling for topic: 10
+Finished labeling topic: 10 with ('black', 'hole') in 1258.6970756053925
+pmi: 5.946364442676452 npmi: 1.0003141466555336
+Starting labeling for topic: 11
+Finished labeling topic: 11 with ('upper', 'bound') in 1531.3691856861115
+pmi: 8.084953893573871 npmi: 0.7953884092302964
+Starting labeling for topic: 12
+Finished labeling topic: 12 with ('optimization', 'problem') in 4714.464444637299
+pmi: 5.290120795197393 npmi: 0.5165295408188517
+Starting labeling for topic: 13
+Finished labeling topic: 13 with ('field', 'theory') in 1970.2612054347992
+pmi: 4.3663016797993714 npmi: 0.5416502673438489
+Starting labeling for topic: 14
+Finished labeling topic: 14 with ('cross', 'section') in 6009.174693107605
+pmi: 8.331431175438363 npmi: 1.0071214167481186
+Starting labeling for topic: 15
+Finished labeling topic: 15 with ('neural', 'network') in 13677.816445112228
+pmi: 6.603316530516395 npmi: 0.7071064281151371
+Starting labeling for topic: 16
+Finished labeling topic: 16 with ('low', 'bound') in 3448.3983516693115
+pmi: 7.434658410339696 npmi: 0.74710133065677
+Starting labeling for topic: 17
+Finished labeling topic: 17 with ('moduli', 'space') in 2144.8494551181793
+pmi: 6.49120419877069 npmi: 0.6391486621924158
+Starting labeling for topic: 18
+Finished labeling topic: 18 with ('magnetic', 'field') in 12964.730949163437
+pmi: 6.4522531361703335 npmi: 0.7178205635008023
+{'topic': 0, 'label': ('monte', 'carlo')}
+{'topic': 1, 'label': ('dark', 'matter')}
+{'topic': 2, 'label': ('differential', 'equation')}
+{'topic': 3, 'label': ('magnetic', 'field')}
+{'topic': 4, 'label': ('x', 'ray')}
+{'topic': 5, 'label': ('dark', 'matter')}
+{'topic': 6, 'label': ('lie', 'algebra')}
+{'topic': 7, 'label': ('quantum', 'system')}
+{'topic': 8, 'label': ('correlation', 'function')}
+{'topic': 9, 'label': ('numerical', 'simulation')}
+{'topic': 10, 'label': ('black', 'hole')}
+{'topic': 11, 'label': ('upper', 'bound')}
+{'topic': 12, 'label': ('optimization', 'problem')}
+{'topic': 13, 'label': ('field', 'theory')}
+{'topic': 14, 'label': ('cross', 'section')}
+{'topic': 15, 'label': ('neural', 'network')}
+{'topic': 16, 'label': ('low', 'bound')}
+{'topic': 17, 'label': ('moduli', 'space')}
+{'topic': 18, 'label': ('magnetic', 'field')}
+NMF Okapi BM25 C-Value Labels Time: 114682.11039996147
+NMF Okapi BM25 C-Value Total Time: 115317.97772836685
+NMF Okapi BM25 ARI c-value: 0.170854932664
+
+*********************************************************
+
+LDA Okapi BM25 with cvalue:
+Starting the TM process...
+Destructor TM
+Topic 0 ['network', 'population', 'human', 'individual', 'social', 'model', 'data', 'pattern', 'activity', 'dynamic']
+Topic 1 ['math', 'triangle', 'cusp', 'adequate', 'cc', 'wedge', 'cd', 'versa', 'angle', 'vice']
+Topic 2 ['graph', 'entropy', 'edge', 'vertex', 'entanglement', 'random', 'number', 'tree', 'state', 'node']
+Topic 3 ['star', 'mass', 'gravitational', 'binary', 'hole', 'black', 'disk', 'radius', 'galaxy', 'rotation']
+Topic 4 ['theory', 'gauge', 'symmetry', 'loop', 'field', 'fermion', 'model', 'lattice', 'operator', 'chiral']
+Topic 5 ['method', 'algorithm', 'data', 'problem', 'approach', 'performance', 'estimation', 'model', 'paper', 'task']
+Topic 6 ['algebra', 'group', 'manifold', 'space', 'algebraic', 'representation', 'lie', 'invariant', 'construction', 'class']
+Topic 7 ['emission', 'observation', 'star', 'line', 'ray', 'solar', 'high', 'source', 'galaxy', 'telescope']
+Topic 8 ['optimal', 'strategy', 'problem', 'game', 'market', 'cost', 'paper', 'price', 'time', 'agent']
+Topic 9 ['channel', 'code', 'capacity', 'communication', 'rate', 'transmission', 'bit', 'scheme', 'error', 'information']
+Topic 10 ['magnetic', 'electron', 'spin', 'field', 'temperature', 'optical', 'phase', 'effect', 'state', 'transition']
+Topic 11 ['equation', 'solution', 'system', 'time', 'function', 'numerical', 'dynamic', 'nonlinear', 'differential', 'condition']
+Topic 12 ['dark', 'neutrino', 'matter', 'cosmic', 'background', 'experiment', 'data', 'ray', 'mass', 'energy']
+Topic 13 ['gravity', 'field', 'scalar', 'black', 'hole', 'cosmological', 'theory', 'einstein', 'spacetime', 'gravitational']
+Topic 14 ['flow', 'simulation', 'force', 'fluid', 'dynamic', 'cell', 'surface', 'model', 'pressure', 'particle']
+Topic 15 ['development', 'research', 'physic', 'science', 'technology', 'application', 'year', 'progress', 'design', 'challenge']
+Topic 16 ['bound', 'proof', 'function', 'problem', 'polynomial', 'set', 'mathbb', 'result', 'theorem', 'paper']
+Topic 17 ['quantum', 'state', 'carlo', 'monte', 'system', 'measurement', 'coherent', 'photon', 'qubit', 'single']
+Topic 18 ['collision', 'quark', 'production', 'heavy', 'decay', 'mass', 'section', 'lhc', 'gev', 'energy']
+LDA Okapi BM25 C-Value TM Time: 2833.099776506424
+Starting the ngram process...
+LDA Okapi BM25 C-Value N-Grams Time: 543.3684508800507
+Starting the labeling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('social', 'network') in 2899.018914461136
+pmi: 5.289934853710467 npmi: 0.49852098074764256
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('macwilliams', 'identity') in 56.63485097885132
+pmi: 10.72508557813229 npmi: 0.9815107796901522
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('graph', 'g') in 1203.0359976291656
+pmi: 4.443427153720053 npmi: 0.4240806157252308
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('black', 'hole') in 2485.478095293045
+pmi: 8.071553346382084 npmi: 1.0079569030000939
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('field', 'theory') in 4714.862448453903
+pmi: 5.0703053073220135 npmi: 0.5672993964257803
+Starting labeling for topic: 5
+Finished labeling topic: 5 with ('neural', 'network') in 15361.335437297821
+pmi: 7.87910396117112 npmi: 0.821829913888869
+Starting labeling for topic: 6
+Finished labeling topic: 6 with ('lie', 'algebra') in 6238.067166090012
+pmi: 6.112420258686691 npmi: 0.5839753829509287
+Starting labeling for topic: 7
+Finished labeling topic: 7 with ('x', 'ray') in 11997.246508598328
+pmi: 8.093307625117825 npmi: 0.900358969729918
+Starting labeling for topic: 8
+Finished labeling topic: 8 with ('nash', 'equilibrium') in 2449.8789274692535
+pmi: 9.486602275973503 npmi: 0.8442333313264028
+Starting labeling for topic: 9
+Finished labeling topic: 9 with ('upper', 'bound') in 1227.770493030548
+pmi: 8.032275073928092 npmi: 0.7979837710680142
+Starting labeling for topic: 10
+Finished labeling topic: 10 with ('magnetic', 'field') in 23308.35222887993
+pmi: 6.336535380935156 npmi: 0.6731619100250564
+Starting labeling for topic: 11
+Finished labeling topic: 11 with ('differential', 'equation') in 9063.992378473282
+pmi: 6.7609244926211085 npmi: 0.661266972784795
+Starting labeling for topic: 12
+Finished labeling topic: 12 with ('dark', 'matter') in 2682.342454433441
+pmi: 7.089425138612348 npmi: 0.9223926971119905
+Starting labeling for topic: 13
+Finished labeling topic: 13 with ('black', 'hole') in 4898.905018091202
+pmi: 7.826031975698596 npmi: 1.0027107299944586
+Starting labeling for topic: 14
+Finished labeling topic: 14 with ('numerical', 'simulation') in 2767.1434576511383
+pmi: 7.205892203521565 npmi: 0.6675441159435883
+Starting labeling for topic: 15
+Finished labeling topic: 15 with ('real', 'time') in 1753.175927400589
+pmi: 7.043562522532883 npmi: 0.5901880794271991
+Starting labeling for topic: 16
+Finished labeling topic: 16 with ('low', 'bound') in 5246.71728849411
+pmi: 7.52809273016529 npmi: 0.7267908952242493
+Starting labeling for topic: 17
+Finished labeling topic: 17 with ('quantum', 'system') in 2700.387887239456
+pmi: 3.614342374984454 npmi: 0.36548886243173717
+Starting labeling for topic: 18
+Finished labeling topic: 18 with ('cross', 'section') in 11385.167011976242
+pmi: 8.714066968753665 npmi: 1.007797572184309
+{'topic': 0, 'label': ('social', 'network')}
+{'topic': 1, 'label': ('macwilliams', 'identity')}
+{'topic': 2, 'label': ('graph', 'g')}
+{'topic': 3, 'label': ('black', 'hole')}
+{'topic': 4, 'label': ('field', 'theory')}
+{'topic': 5, 'label': ('neural', 'network')}
+{'topic': 6, 'label': ('lie', 'algebra')}
+{'topic': 7, 'label': ('x', 'ray')}
+{'topic': 8, 'label': ('nash', 'equilibrium')}
+{'topic': 9, 'label': ('upper', 'bound')}
+{'topic': 10, 'label': ('magnetic', 'field')}
+{'topic': 11, 'label': ('differential', 'equation')}
+{'topic': 12, 'label': ('dark', 'matter')}
+{'topic': 13, 'label': ('black', 'hole')}
+{'topic': 14, 'label': ('numerical', 'simulation')}
+{'topic': 15, 'label': ('real', 'time')}
+{'topic': 16, 'label': ('low', 'bound')}
+{'topic': 17, 'label': ('quantum', 'system')}
+{'topic': 18, 'label': ('cross', 'section')}
+LDA Okapi BM25 C-Value Labels Time: 112439.57129359245
+LDA Okapi BM25 C-Value Total Time: 115816.03952097893
+LDA Okapi ARI c-value: 0.191206164428

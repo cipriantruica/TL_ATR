@@ -1,0 +1,171 @@
+Connecting to database...
+Connected!
+Vocabulary...
+Vocabulary processed!
+Documents...
+Documents processed!
+18464
+Vectorisation started...
+Vectorisation processed!
+Num topics 5
+len voc small: 22666
+
+
+=========================================================
+==========================TFIDF==========================
+=========================================================
+
+
+TFIDF
+NMF TFIDF with cvalue:
+Starting the TM process...
+Topic 0 ['data', 'mining', 'method', 'set', 'approach', 'algorithm', 'paper', 'pattern', 'classification', 'large']
+Topic 1 ['problem', 'algorithm', 'time', 'bound', 'graph', 'approximation', 'log', 'number', 'case', 'polynomial']
+Topic 2 ['image', 'surface', 'method', 'object', 'model', 'motion', 'point', 'shape', 'scene', 'camera']
+Topic 3 ['system', 'information', 'application', 'research', 'technology', 'user', 'management', 'paper', 'data', 'visualization']
+Topic 4 ['query', 'database', 'relational', 'performance', 'xml', 'object', 'processing', 'optimization', 'language', 'data']
+NMF TFIDF C-Value TM Time: 1.1977837085723877
+Starting the ngram process...
+NMF TFIDF C-Value N-Grams Time: 30.226099729537964
+Starting the labling process...
+Starting labeling topic: 0
+Finished labeling topic: 0 with ('data', 'mining') in 365.7380180358887
+pmi: 4.752839844373982 npmi: 0.5547913115841071
+Starting labeling topic: 1
+Finished labeling topic: 1 with ('low', 'bound') in 1277.1356801986694
+pmi: 7.290676134627386 npmi: 0.8147084218034775
+Starting labeling topic: 2
+Finished labeling topic: 2 with ('real', 'time') in 655.8301746845245
+pmi: 7.366403345982473 npmi: 0.7094952674676496
+Starting labeling topic: 3
+Finished labeling topic: 3 with ('research', 'paper') in 405.8052568435669
+pmi: 5.740742127402824 npmi: 0.5698853990056112
+Starting labeling topic: 4
+Finished labeling topic: 4 with ('database', 'system') in 358.8048985004425
+pmi: 4.887476502153069 npmi: 0.5396143300484936
+{'topic': 0, 'label': ('data', 'mining')}
+{'topic': 1, 'label': ('low', 'bound')}
+{'topic': 2, 'label': ('real', 'time')}
+{'topic': 3, 'label': ('research', 'paper')}
+{'topic': 4, 'label': ('database', 'system')}
+NMF TFIDF C-Value Labels Time: 3063.321172475815
+NMF TFIDF C-Value Total Time: 3094.745055913925
+NMF TFIDF ARI C-Value: 0.386037691626
+
+*********************************************************
+
+LDA TFIDF with cvalue:
+Starting the TM process...
+Destructor TM
+Topic 0 ['system', 'data', 'research', 'database', 'information', 'paper', 'knowledge', 'application', 'technology', 'medical']
+Topic 1 ['image', 'method', 'model', 'surface', 'motion', 'visualization', 'object', 'shape', 'reconstruction', 'approach']
+Topic 2 ['data', 'query', 'database', 'performance', 'algorithm', 'paper', 'system', 'result', 'approach', 'technique']
+Topic 3 ['bound', 'algorithm', 'problem', 'time', 'complexity', 'polynomial', 'low', 'number', 'random', 'case']
+Topic 4 ['graph', 'algorithm', 'problem', 'approximation', 'time', 'edge', 'vertex', 'minimum', 'tree', 'log']
+LDA TFIDF C-Value TM Time: 110.00254726409912
+Starting the ngram process...
+LDA TFIDF C-Value N-Grams Time: 31.71057415008545
+Starting the labling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('data', 'mining') in 394.16242146492004
+pmi: 5.725202870259698 npmi: 0.6071653849583033
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('real', 'time') in 765.5771057605743
+pmi: 7.228785118072401 npmi: 0.6970892794271079
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('database', 'system') in 1185.8399789333344
+pmi: 5.075646379981598 npmi: 0.504342149308672
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('low', 'bound') in 355.2909004688263
+pmi: 7.2456730743699 npmi: 0.8441202461142527
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('approximation', 'algorithm') in 331.82274103164673
+pmi: 5.080626034886673 npmi: 0.5718494256397114
+{'topic': 0, 'label': ('data', 'mining')}
+{'topic': 1, 'label': ('real', 'time')}
+{'topic': 2, 'label': ('database', 'system')}
+{'topic': 3, 'label': ('low', 'bound')}
+{'topic': 4, 'label': ('approximation', 'algorithm')}
+LDA TFIDF C-Value Labels Time: 3032.700467824936
+LDA TFIDF C-Value Total Time: 3174.4135892391205
+LDA TFIDF ARI c-value: 0.299578105243
+
+
+=========================================================
+=======================Okapi BM25========================
+=========================================================
+
+
+NMF Okapi BM25 with cvalue:
+Destructor TM
+Starting the TM process...
+Topic 0 ['algorithm', 'problem', 'time', 'graph', 'approximation', 'result', 'number', 'bound', 'tree', 'polynomial']
+Topic 1 ['data', 'mining', 'visualization', 'rule', 'discovery', 'knowledge', 'association', 'pattern', 'approach', 'technique']
+Topic 2 ['image', 'model', 'segmentation', 'motion', 'reconstruction', 'method', 'surface', 'registration', 'object', 'shape']
+Topic 3 ['research', 'information', 'medical', 'technology', 'paper', 'health', 'application', 'care', 'clinical', 'patient']
+Topic 4 ['database', 'system', 'query', 'object', 'management', 'relational', 'language', 'xml', 'processing', 'performance']
+NMF Okapi BM25 C-Value TM Time: 1.001326322555542
+Starting the ngram process...
+NMF Okapi BM25 C-Value N-Grams Time: 31.078660011291504
+Starting the labling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('low', 'bound') in 2088.272928953171
+pmi: 7.495508422126008 npmi: 0.8055170678673721
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('data', 'mining') in 586.6572186946869
+pmi: 4.555023123373501 npmi: 0.5316956216243015
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('real', 'time') in 547.7266778945923
+pmi: 7.4684107496307055 npmi: 0.7026666312872549
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('research', 'paper') in 85.89531779289246
+pmi: 5.597421718816341 npmi: 0.6369271508374253
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('database', 'system') in 395.7726767063141
+pmi: 4.0284971274128605 npmi: 0.4678813586617004
+{'topic': 0, 'label': ('low', 'bound')}
+{'topic': 1, 'label': ('data', 'mining')}
+{'topic': 2, 'label': ('real', 'time')}
+{'topic': 3, 'label': ('research', 'paper')}
+{'topic': 4, 'label': ('database', 'system')}
+NMF Okapi BM25 C-Value Labels Time: 3704.3319725990295
+NMF Okapi BM25 C-Value Total Time: 3736.4119589328766
+NMF Okapi BM25 ARI c-value: 0.341313881348
+
+*********************************************************
+
+LDA Okapi BM25 with cvalue:
+Starting the TM process...
+Destructor TM
+Topic 0 ['abstract', 'reconstruction', 'tree', 'visualization', 'preliminary', 'dynamic', 'pet', 'interactive', 'computation', 'data']
+Topic 1 ['medical', 'image', 'research', 'system', 'clinical', 'patient', 'paper', 'neural', 'information', 'registration']
+Topic 2 ['data', 'image', 'method', 'algorithm', 'model', 'approach', 'feature', 'object', 'pattern', 'classification']
+Topic 3 ['database', 'data', 'system', 'query', 'management', 'application', 'web', 'information', 'object', 'mining']
+Topic 4 ['algorithm', 'problem', 'graph', 'time', 'bound', 'approximation', 'point', 'polynomial', 'number', 'linear']
+LDA Okapi BM25 C-Value TM Time: 106.91179203987122
+Starting the ngram process...
+LDA Okapi BM25 C-Value N-Grams Time: 31.786415338516235
+Starting the labeling process...
+Starting labeling for topic: 0
+Finished labeling topic: 0 with ('black', 'box') in 26.894559144973755
+pmi: 10.349828916875792 npmi: 0.993366234336484
+Starting labeling for topic: 1
+Finished labeling topic: 1 with ('research', 'paper') in 77.86779928207397
+pmi: 6.34118214657202 npmi: 0.7192414130299895
+Starting labeling for topic: 2
+Finished labeling topic: 2 with ('data', 'set') in 1038.0418679714203
+pmi: 5.247081878313104 npmi: 0.5556374277523585
+Starting labeling for topic: 3
+Finished labeling topic: 3 with ('database', 'system') in 993.7228059768677
+pmi: 4.378132222032113 npmi: 0.45903739937758187
+Starting labeling for topic: 4
+Finished labeling topic: 4 with ('low', 'bound') in 1743.8724038600922
+pmi: 7.503505284458909 npmi: 0.8132154484770412
+{'topic': 0, 'label': ('black', 'box')}
+{'topic': 1, 'label': ('research', 'paper')}
+{'topic': 2, 'label': ('data', 'set')}
+{'topic': 3, 'label': ('database', 'system')}
+{'topic': 4, 'label': ('low', 'bound')}
+LDA Okapi BM25 C-Value Labels Time: 3880.40625667572
+LDA Okapi BM25 C-Value Total Time: 4019.1044640541077
+LDA Okapi ARI c-value: 0.264755949119
