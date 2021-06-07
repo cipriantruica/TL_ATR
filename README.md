@@ -1,4 +1,4 @@
-## Topic Labeling using Automatic (Domain-Specific) Term Recognition
+## Topic Labeling using Automatic (Domain-Specific) Term Recognition  
 
 Prerequisite
 * Python 3.7.6
